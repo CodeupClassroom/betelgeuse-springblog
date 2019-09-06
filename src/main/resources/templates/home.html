@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body id="index-body" >
+
+<br/>
+<img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="" th:if="${role != 'admin'}" />
+
+<img src="https://www.digitalocean.com/assets/media/homepage/logos/docker-bab60eeb.png" alt="" th:if="${role == 'admin'}" />
+
+<input type="text" />
+
+<hr/>
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, magnam quis. Accusantium architecto beatae blanditiis culpa distinctio dolorem expedita harum, laborum magnam, molestiae mollitia nostrum, quo repudiandae sequi soluta vero?
+
+</body>
+</html>
