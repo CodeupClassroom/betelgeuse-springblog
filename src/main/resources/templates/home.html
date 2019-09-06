@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Title</title>
+    <link rel="stylesheet" href="/css/main.css" />
 </head>
 <body id="index-body" >
 
@@ -15,7 +16,13 @@
 
 <hr/>
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, magnam quis. Accusantium architecto beatae blanditiis culpa distinctio dolorem expedita harum, laborum magnam, molestiae mollitia nostrum, quo repudiandae sequi soluta vero?
+<ul>
+    <li class="lists" th:each="color : ${colors}" th:text="${color}"></li>
+</ul>
+
+<div class="this-wont-render" th:replace="fragments/footer :: my-footer">
+
+</div>
 
 </body>
 </html>
