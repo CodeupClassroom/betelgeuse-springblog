@@ -5,6 +5,8 @@
 </head>
 <body>
 
+<th:block th:replace="fragments/navbar :: top-nav" />
+
 <h1 th:text="${cohort}"></h1>
 
 <form action="/join" method="post">
