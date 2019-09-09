@@ -4,10 +4,7 @@ import com.codeup.springblog.models.Ad;
 import com.codeup.springblog.repos.AdRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +32,8 @@ public class AdController {
         return "ads/show";
     }
 
-    @GetMapping("/ads/search/{term}")
-    public String show(@PathVariable String term, Model viewModel) {
+    @GetMapping("/ads/search")
+    public String show(@RequestParam(name = "term") String term, Model viewModel) {
         List<Ad> ads = adDao.searchByTitleLike(term);
         viewModel.addAttribute("ads", ads);
         return "ads/index";

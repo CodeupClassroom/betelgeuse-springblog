@@ -21,9 +21,8 @@
     <li class="lists" th:each="color : ${colors}" th:text="${color}"></li>
 </ul>
 
-<div class="this-wont-render" th:replace="fragments/footer :: my-footer">
+<div class="this-wont-render" th:replace="fragments/footer :: my-footer"></div>
 
-</div>
-<script src="/js/main.js" />
+<th:block th:replace="fragments/scripts :: scripts"></th:block>
 </body>
 </html>

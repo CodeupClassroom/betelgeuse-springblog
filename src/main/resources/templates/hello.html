@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title>Title</title>
+    <th:block th:replace="fragments/header :: main-header('Hello')" />
 </head>
 <body>
 
 <h1>Hello, <span th:text="${name}"></span></h1>
-
+<th:block th:replace="fragments/scripts :: scripts"></th:block>
 </body>
 </html>
