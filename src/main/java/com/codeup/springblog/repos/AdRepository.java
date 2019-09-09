@@ -15,7 +15,7 @@ public interface AdRepository extends CrudRepository<Ad, Long> {
     Ad findByTitle(String title);
 
     // HQL Custom Query
-    @Query("from ads where title like %:term%")
+    @Query("from Ad a where a.title like %:term%")
     List<Ad> searchByTitleLike(@Param("term") String term);
 
 }
