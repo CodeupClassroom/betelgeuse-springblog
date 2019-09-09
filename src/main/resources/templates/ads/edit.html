@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: main-header('Ad')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: top-nav" />
+
+<main class="container">
+
+    <form th:action="@{'/ads/' + ${ad.id} + '/edit'}" method="post">
+        <input type="text" name="title" th:value="${ad.title}" />
+        <input type="text" name="description" th:value="${ad.description}" />
+        <button class="btn btn-warning">Edit</button>
+    </form>
+
+    <form th:action="@{'/ads/' + ${ad.id} + '/delete'}" method="post">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+</main>
+
+<th:block th:replace="fragments/scripts :: scripts"></th:block>
+
+</body>
+</html>

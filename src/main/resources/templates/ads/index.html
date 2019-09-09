@@ -14,7 +14,8 @@
             <div class="card-body">
                 <h5 class="card-title" th:text="${ad.title}"></h5>
                 <p class="card-text" th:text="${ad.description}"></p>
-                <a th:href="@{/ads/{id}(id=${ad.id})}" class="btn btn-primary">See Ad</a>
+                <a th:href="@{/ads/{id}(id=${ad.id})}" class="btn btn-primary">Show</a>
+                <a th:href="@{/ads/{id}/edit(id=${ad.id})}" class="btn btn-warning">Edit</a>
             </div>
         </div>
     </div>
