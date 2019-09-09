@@ -6,8 +6,12 @@
 <body>
 <th:block th:replace="fragments/navbar :: top-nav" />
 
-<h1 th:text="${ad.title}" />
-<p th:text="${ad.description}" />
+<main class="container">
+    <div class="card">
+        <h1 class="card-title" th:text="${ad.title}" />
+        <p class="card-text" th:text="${ad.description}" />
+    </div>
+</main>
 
 <th:block th:replace="fragments/scripts :: scripts"></th:block>
 

@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="fragments/header :: main-header('Ad')" />
+    <th:block th:replace="fragments/header :: main-header('Ads')" />
 </head>
 <body>
 <th:block th:replace="fragments/navbar :: top-nav" />
 
-<div class="card" th:each="ad : ${ads}">
-    <h1 th:text="${ad.title}" />
-    <p th:text="${ad.description}" />
-    <input type="hidden" name="id" th:value="${ad.id}" />
-</div>
+<main class="container">
+
+    <div class="card-columns">
+        <div class="card ad" th:each="ad : ${ads}">
+            <img th:src="@{'http://lorempixel.com/400/200/city?id=' + ${ad.id}}" class="card-img-top" alt="..." />
+            <div class="card-body">
+                <h5 class="card-title" th:text="${ad.title}"></h5>
+                <p class="card-text" th:text="${ad.description}"></p>
+                <a th:href="@{/ads/{id}(id=${ad.id})}" class="btn btn-primary">See Ad</a>
+            </div>
+        </div>
+    </div>
+</main>
 
 <th:block th:replace="fragments/scripts :: scripts"></th:block>
 
