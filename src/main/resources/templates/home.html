@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body id="index-body" >
+
+<br/>
+<img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="" th:if="${role != 'admin'}" />
+
+<img src="https://www.digitalocean.com/assets/media/homepage/logos/docker-bab60eeb.png" alt="" th:if="${role == 'admin'}" />
+
+<input type="text" />
+
+<hr/>
+
+<ul>
+    <li class="lists" th:each="color : ${colors}" th:text="${color}"></li>
+</ul>
+
+<div class="this-wont-render" th:replace="fragments/footer :: my-footer">
+
+</div>
+<script src="/js/main.js" />
+</body>
+</html>
