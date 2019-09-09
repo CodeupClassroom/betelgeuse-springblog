@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: main-header('Ad')" />
+</head>
+<body>
+<th:block th:replace="fragments/navbar :: top-nav" />
+
+<div class="card" th:each="ad : ${ads}">
+    <h1 th:text="${ad.title}" />
+    <p th:text="${ad.description}" />
+</div>
+
+</body>
+</html>
