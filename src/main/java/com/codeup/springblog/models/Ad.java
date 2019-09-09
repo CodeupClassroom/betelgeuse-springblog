@@ -1,12 +1,29 @@
 package com.codeup.springblog.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity(name = "ads")
 public class Ad {
+
+    @Id @GeneratedValue
+    private long id;
+    @Column(nullable = false, length = 100)
     private String title;
+    @Column(nullable = false)
     private String description;
 
-    public Ad(String title, String description) {
+    // Useful to create a new instance of the Ad
+    public Ad() {
+    }
+
+    // Constructor for everything for the R of (CRUD)
+    public Ad(long id, String title, String description) {
         this.title = title;
         this.description = description;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -23,5 +40,13 @@ public class Ad {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
