@@ -13,15 +13,19 @@ public class Ad {
     @Column(nullable = false)
     private String description;
 
+    @OneToOne
+    private User user;
+
     // Useful to create a new instance of the Ad
     public Ad() {
     }
 
     // Constructor for everything for the R of (CRUD)
-    public Ad(long id, String title, String description) {
+    public Ad(long id, String title, String description, User user) {
         this.title = title;
         this.description = description;
         this.id = id;
+        this.user = user;
     }
 
     public String getTitle() {
@@ -46,5 +50,13 @@ public class Ad {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
