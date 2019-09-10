@@ -1,6 +1,7 @@
 package com.codeup.springblog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ads")
@@ -16,16 +17,21 @@ public class Ad {
     @OneToOne
     private User user;
 
+    // This one does not create a column
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
+    private List<AdImage> images;
+
     // Useful to create a new instance of the Ad
     public Ad() {
     }
 
     // Constructor for everything for the R of (CRUD)
-    public Ad(long id, String title, String description, User user) {
+    public Ad(long id, String title, String description, User user, List<AdImage> imgs) {
         this.title = title;
         this.description = description;
         this.id = id;
         this.user = user;
+        this.images = imgs;
     }
 
     public String getTitle() {
@@ -58,5 +64,13 @@ public class Ad {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<AdImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<AdImage> images) {
+        this.images = images;
     }
 }

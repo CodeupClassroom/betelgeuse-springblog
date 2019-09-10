@@ -9,6 +9,7 @@
 <main class="container">
     <div class="card">
         <h1 class="card-title" th:text="${ad.title}" />
+        <img th:each="img : ${ad.images}" th:src="${img.path}" alt="doggies" />
         <p class="card-text" th:text="${ad.description}" />
         <a href="#" th:text="${ad.user.email}"></a>
     </div>
