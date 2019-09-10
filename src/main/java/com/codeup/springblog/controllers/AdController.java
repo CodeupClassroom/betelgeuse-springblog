@@ -63,16 +63,21 @@ public class AdController {
         adDao.delete(id);
         return "redirect:/ads";
     }
-//    @GetMapping("/posts/create")
-//    @ResponseBody
-//    public String createPostForm() {
-//        return "Please fill out this form";
-//    }
-//
-////    POST	/posts/create	create a new post
-//    @PostMapping("/posts/create")
-//    @ResponseBody
-//    public String createPost() {
-//        return "Great new Post";
-//    }
+
+    @GetMapping("/ads/create")
+    public String showCreateForm() {
+        return "ads/create";
+    }
+
+    @PostMapping("/ads/create")
+    public String createAd(
+            @RequestParam(name = "title") String titleParam,
+            @RequestParam(name = "description") String descParam
+    ) {
+        Ad adToBeCreated = new Ad();
+        adToBeCreated.setTitle(titleParam);
+        adToBeCreated.setDescription(descParam);
+        Ad savedAd = adDao.save(adToBeCreated);
+        return "redirect:/ads/" + savedAd.getId();
+    }
 }
