@@ -4,6 +4,8 @@ import com.codeup.springblog.models.Ad;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.AdRepository;
 import com.codeup.springblog.repos.UserRepository;
+import com.codeup.springblog.services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class AdController {
         this.userDao = userRepo;
         this.adDao = adRepository;
     }
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/ads")
     public String index(Model vModel) {
@@ -76,19 +81,16 @@ public class AdController {
 
     @PostMapping("/ads/create")
     public String createAd(
-//            @RequestParam(name = "title") String titleParam,
-//            @RequestParam(name = "description") String descParam
             @ModelAttribute Ad adPassedIn
     ) {
         User userDB = userDao.findOne(1L);
-//        Ad adToBeCreated = new Ad();
-
-//        adToBeCreated.setTitle(titleParam);
-//        adToBeCreated.setDescription(descParam);
-//        adToBeCreated.setUser(userDB);
         adPassedIn.setUser(userDB);
 
         Ad savedAd = adDao.save(adPassedIn);
+        emailService.prepareAndSend(
+                savedAd,
+                "Ad created",
+                String.format("Ad with the id %d has been created", savedAd.getId()));
         return "redirect:/ads/" + savedAd.getId();
     }
 }
