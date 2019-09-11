@@ -7,9 +7,9 @@
 <th:block th:replace="fragments/navbar :: top-nav" />
 
 <main class="container">
-    <form th:action="@{/ads/create}" th:method="post">
-        <input type="text" name="title"/>
-        <input type="text" name="description"/>
+    <form th:action="@{/ads/create}" th:method="post" th:object="${ad}">
+        Title:<input th:field="*{title}"/><br/>
+        Description<input th:field="*{description}"/><br/>
         <button class="btn btn-info">Create</button>
     </form>
 </main>

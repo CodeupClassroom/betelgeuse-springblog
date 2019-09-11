@@ -69,23 +69,26 @@ public class AdController {
     }
 
     @GetMapping("/ads/create")
-    public String showCreateForm() {
+    public String showCreateForm(Model model) {
+        model.addAttribute("ad", new Ad());
         return "ads/create";
     }
 
     @PostMapping("/ads/create")
     public String createAd(
-            @RequestParam(name = "title") String titleParam,
-            @RequestParam(name = "description") String descParam
+//            @RequestParam(name = "title") String titleParam,
+//            @RequestParam(name = "description") String descParam
+            @ModelAttribute Ad adPassedIn
     ) {
         User userDB = userDao.findOne(1L);
-        Ad adToBeCreated = new Ad();
+//        Ad adToBeCreated = new Ad();
 
-        adToBeCreated.setTitle(titleParam);
-        adToBeCreated.setDescription(descParam);
-        adToBeCreated.setUser(userDB);
+//        adToBeCreated.setTitle(titleParam);
+//        adToBeCreated.setDescription(descParam);
+//        adToBeCreated.setUser(userDB);
+        adPassedIn.setUser(userDB);
 
-        Ad savedAd = adDao.save(adToBeCreated);
+        Ad savedAd = adDao.save(adPassedIn);
         return "redirect:/ads/" + savedAd.getId();
     }
 }
