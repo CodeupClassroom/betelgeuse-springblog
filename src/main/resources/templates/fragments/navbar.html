@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;" th:fragment="top-nav">
@@ -16,13 +17,24 @@
             <li class="nav-item">
                 <a class="nav-link" href="/ads">Ads</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/join">Join</a>
+            <li  class="nav-item">
+                <a class="nav-link" href="/ads/create">Create Ad</a>
             </li>
+        <th:block sec:authorize="isAnonymous()">
+            <li class="nav-item">
+                <a class="nav-link" href="/sign-up">Sign up</a>
+            </li>
+            <li  class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+            </li>
+        </th:block>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="/ads/search" method="get">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="term" />
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="post">
+            <button class="btn-link btn-danger" style="margin-top: 8px">Logout</button>
         </form>
     </div>
 </nav>
