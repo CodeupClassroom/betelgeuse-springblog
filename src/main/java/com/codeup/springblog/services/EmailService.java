@@ -22,7 +22,7 @@ public class EmailService {
         msg.setFrom(from);
         msg.setTo(ad.getUser().getEmail());
         msg.setSubject(subject);
-        msg.setText(body);
+        msg.setText("<h1>Fer</h1><br><a href='#'>link</a>");
 
         try{
             this.emailSender.send(msg);
