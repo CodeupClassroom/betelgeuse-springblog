@@ -7,6 +7,8 @@
 </head>
 <body id="index-body" >
 
+<th:block th:replace="fragments/navbar :: top-nav" />
+
 <div sec:authorize="isAuthenticated()">
     This content is only shown to authenticated users.
 
@@ -14,7 +16,6 @@
     Username: <span th:text="${#authentication.principal.username}"/>
     Email: <span th:text="${#authentication.principal.email}"/>
 </div>
-<th:block th:replace="fragments/navbar :: top-nav" />
 
 <br/>
 <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="" th:if="${role != 'admin'}" />

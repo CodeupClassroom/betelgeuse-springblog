@@ -18,8 +18,16 @@
                 <a class="nav-link" href="/ads">Ads</a>
             </li>
             <li  class="nav-item">
-                <a class="nav-link" href="/join">Join</a>
+                <a class="nav-link" href="/ads/create">Create Ad</a>
             </li>
+        <th:block sec:authorize="isAnonymous()">
+            <li class="nav-item">
+                <a class="nav-link" href="/sign-up">Sign up</a>
+            </li>
+            <li  class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+            </li>
+        </th:block>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="/ads/search" method="get">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="term" />
