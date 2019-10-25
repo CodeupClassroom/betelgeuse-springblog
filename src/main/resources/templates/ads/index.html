@@ -8,6 +8,8 @@
 
 <main class="container">
 
+    <h3>Latest ads</h3>
+
     <div class="card-columns">
         <div class="card ad" th:each="ad : ${ads}">
             <img th:src="@{'http://lorempixel.com/400/200/city?id=' + ${ad.id}}" class="card-img-top" alt="..." />
