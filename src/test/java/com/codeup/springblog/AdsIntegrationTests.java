@@ -9,17 +9,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrlPattern;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringblogApplication.class)
 @AutoConfigureMockMvc
-public class PostIntegrationTests {
+public class AdsIntegrationTests {
 
     @Autowired
     private MockMvc mvc;
+
 
     // Sanity Test, just to make sure the mvc bean is working
     @Test
@@ -27,12 +29,13 @@ public class PostIntegrationTests {
         assertThat(mvc).isNotNull();
     }
 
-    // https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/util/AntPathMatcher.html
     @Test
-    public void testShowCreatePostPage() throws Exception {
-        this.mvc.perform(get("/posts/create"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrlPattern("**/login"));
+    public void testAdsIndex() throws Exception {
+        this.mvc.perform(get("/ads"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Latest ads")));
     }
+
+
 
 }

@@ -86,7 +86,12 @@ public class AdController {
     ) {
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        System.out.println("userSession.toString() = " + userSession.toString());
+
         User userDB = userDao.getOne(userSession.getId());
+
+        System.out.println("userDB.toString() = " + userDB.toString());
+
         adPassedIn.setUser(userDB);
 
         Ad savedAd = adDao.save(adPassedIn);
