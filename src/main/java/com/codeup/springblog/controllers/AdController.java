@@ -37,7 +37,7 @@ public class AdController {
 
     @GetMapping("/ads/{id}")
     public String show(@PathVariable long id, Model viewModel) {
-        Ad ad = adDao.findOne(id);
+        Ad ad = adDao.getOne(id);
         viewModel.addAttribute("ad", ad);
         return "ads/show";
     }
@@ -51,7 +51,7 @@ public class AdController {
 
     @GetMapping("/ads/{id}/edit")
     public String edit(@PathVariable long id, Model viewModel) {
-        Ad ad = adDao.findOne(id);
+        Ad ad = adDao.getOne(id);
         viewModel.addAttribute("ad", ad);
         return "ads/edit";
     }
@@ -61,7 +61,7 @@ public class AdController {
                          @RequestParam(name = "title") String title,
                          @RequestParam(name = "description") String description,
                          Model viewModel) {
-        Ad adToBeUpdated = adDao.findOne(id);
+        Ad adToBeUpdated = adDao.getOne(id);
         adToBeUpdated.setTitle(title);
         adToBeUpdated.setDescription(description);
         adDao.save(adToBeUpdated);
@@ -70,7 +70,7 @@ public class AdController {
 
     @PostMapping("/ads/{id}/delete")
     public String delete(@PathVariable long id){
-        adDao.delete(id);
+        adDao.deleteById(id);
         return "redirect:/ads";
     }
 
@@ -86,7 +86,12 @@ public class AdController {
     ) {
         User userSession = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        User userDB = userDao.findOne(userSession.getId());
+        System.out.println("userSession.toString() = " + userSession.toString());
+
+        User userDB = userDao.getOne(userSession.getId());
+
+        System.out.println("userDB.toString() = " + userDB.toString());
+
         adPassedIn.setUser(userDB);
 
         Ad savedAd = adDao.save(adPassedIn);

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="ad_images")
 public class AdImage {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)
@@ -22,6 +22,11 @@ public class AdImage {
         this.path = path;
         this.ad = ad;
         this.id = id;
+    }
+
+    public AdImage(String path, Ad ad) {
+        this.path = path;
+        this.ad = ad;
     }
 
     public long getId() {
