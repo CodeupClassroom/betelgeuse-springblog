@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
@@ -34,6 +35,9 @@ public class AdsControllerIntegrationTests {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Before
     public void setup(){
         testUser = userDao.findByUsername("testUser");
@@ -41,7 +45,7 @@ public class AdsControllerIntegrationTests {
         if(testUser == null){
             User newUser = new User();
             newUser.setUsername("testUser");
-            newUser.setPassword("pass");
+            newUser.setPassword(passwordEncoder.encode("pass"));
             newUser.setEmail("testUser@codeup.com");
             testUser = userDao.save(newUser);
         }

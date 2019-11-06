@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -46,6 +47,9 @@ public class AdsIntegrationTests {
     @Autowired
     UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Before
     public void setup(){
 
@@ -55,7 +59,7 @@ public class AdsIntegrationTests {
         if(testUser == null){
             User newUser = new User();
             newUser.setUsername("testUser");
-            newUser.setPassword("pass");
+            newUser.setPassword(passwordEncoder.encode("pass"));
             newUser.setEmail("testUser@codeup.com");
             testUser = userDao.save(newUser);
         }
