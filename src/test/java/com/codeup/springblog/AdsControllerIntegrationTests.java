@@ -37,6 +37,7 @@ public class AdsControllerIntegrationTests {
     @Before
     public void setup(){
         testUser = userDao.findByUsername("testUser");
+        // Creates the test user if not exists
         if(testUser == null){
             User newUser = new User();
             newUser.setUsername("testUser");
@@ -55,7 +56,6 @@ public class AdsControllerIntegrationTests {
         List<AdImage> images = new ArrayList<>();
         images.add(new AdImage("https://codeup.com/wp-content/uploads/2019/10/codeup_classroom-san-antonio.jpg", newAd));
         images.add(new AdImage("https://codeup.com/wp-content/uploads/2019/10/code-up-learning-class-8.jpg", newAd));
-
         newAd.setTitle("test");
         newAd.setDescription("random");
         newAd.setImages(images);

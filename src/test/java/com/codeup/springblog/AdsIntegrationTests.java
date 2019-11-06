@@ -10,10 +10,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,7 +48,10 @@ public class AdsIntegrationTests {
 
     @Before
     public void setup(){
+
         testUser = userDao.findByUsername("testUser");
+
+        // Creates the test user if not exists
         if(testUser == null){
             User newUser = new User();
             newUser.setUsername("testUser");
@@ -49,7 +59,9 @@ public class AdsIntegrationTests {
             newUser.setEmail("testUser@codeup.com");
             testUser = userDao.save(newUser);
         }
+
         userService.authenticate(testUser);
+
     }
 
     // Sanity Test, just to make sure the mvc bean is working
@@ -68,7 +80,9 @@ public class AdsIntegrationTests {
     @Test
     public void testCreateAd() throws Exception {
 
-        HttpSession session = this.mvc.perform(post("/login").param("username", "fer").param("password", "pass"))
+        HttpSession session = this.mvc.perform(post("/login")
+                .param("username", "ana")
+                .param("password", "pass"))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
                 .andExpect(redirectedUrl("/ads"))
                 .andReturn()
@@ -82,7 +96,7 @@ public class AdsIntegrationTests {
                     .session((MockHttpSession) session)
                     .param("title", "test")
                     .param("description", "for sale"))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
     }
-
 }
+
