@@ -81,7 +81,7 @@ public class AdsIntegrationTests {
     public void testCreateAd() throws Exception {
 
         HttpSession session = this.mvc.perform(post("/login")
-                .param("username", "ana")
+                .param("username", "testUser")
                 .param("password", "pass"))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
                 .andExpect(redirectedUrl("/ads"))
@@ -97,6 +97,14 @@ public class AdsIntegrationTests {
                     .param("title", "test")
                     .param("description", "for sale"))
                 .andExpect(status().is3xxRedirection());
+    }
+
+
+    @Test
+    public void testShowAd() throws Exception {
+        this.mvc.perform(get("/ads/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("for sale")));
     }
 }
 
