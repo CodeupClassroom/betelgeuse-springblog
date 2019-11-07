@@ -4,7 +4,6 @@ import com.codeup.springblog.models.Ad;
 import com.codeup.springblog.models.User;
 import com.codeup.springblog.repos.AdRepository;
 import com.codeup.springblog.repos.UserRepository;
-import com.codeup.springblog.services.UserService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AdsIntegrationTests {
 
     private User testUser;
-    HttpSession httpSession;
+    private HttpSession httpSession;
 
     @Autowired
     private MockMvc mvc;
@@ -43,9 +42,6 @@ public class AdsIntegrationTests {
 
     @Autowired
     AdRepository adsDao;
-
-    @Autowired
-    UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -64,7 +60,7 @@ public class AdsIntegrationTests {
             testUser = userDao.save(newUser);
         }
 
-        // Throw a Post request to /login and expect a redirection to the Ads index page after being logged in
+        // Throws a Post request to /login and expect a redirection to the Ads index page after being logged in
         httpSession = this.mvc.perform(post("/login").with(csrf())
                 .param("username", "testUser")
                 .param("password", "pass"))
@@ -75,21 +71,21 @@ public class AdsIntegrationTests {
                 .getSession();
     }
 
-    // Sanity Test, just to make sure the mvc bean is working
     @Test
     public void contextLoads() {
+        // Sanity Test, just to make sure the MVC bean is working
         assertThat(mvc).isNotNull();
     }
 
     @Test
     public void testIfUserSessionIsActive() throws Exception {
-        // Make sure the returned session is not null
+        // It makes sure the returned session is not null
         Assert.assertNotNull(httpSession);
     }
 
     @Test
     public void testCreateAd() throws Exception {
-        // Throw a Post request to /ads/create and expect a redirection to the Ad
+        // Throws a Post request to /ads/create and expect a redirection to the Ad
         this.mvc.perform(
                 post("/ads/create").with(csrf())
                     .session((MockHttpSession) httpSession)
@@ -100,8 +96,10 @@ public class AdsIntegrationTests {
 
     @Test
     public void testEditAd() throws Exception {
+        // Gets the first Ad for tests purposes
         Ad existingAd = adsDao.findAll().get(0);
-        // Throw a Post request to /ads/{id}/edit and expect a redirection to the Ad
+
+        // Throws a Post request to /ads/{id}/edit and expect a redirection to the Ad show page
         this.mvc.perform(
                 post("/ads/" + existingAd.getId() + "/edit").with(csrf())
                         .session((MockHttpSession) httpSession)
@@ -112,7 +110,10 @@ public class AdsIntegrationTests {
 
     @Test
     public void testShowAd() throws Exception {
+
         Ad existingAd = adsDao.findAll().get(0);
+
+        // Throws a Post request to /ads/{id} and expect a redirection to the Ad show page
         this.mvc.perform(get("/ads/" + existingAd.getId()))
                 .andExpect(status().isOk())
                 // Test the dynamic content of the page
@@ -132,7 +133,7 @@ public class AdsIntegrationTests {
 
     @Test
     public void testDeleteAd() throws Exception {
-
+        // Creates a test Ad to be deleted
         this.mvc.perform(
                 post("/ads/create").with(csrf())
                         .session((MockHttpSession) httpSession)
