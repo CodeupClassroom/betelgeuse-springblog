@@ -64,8 +64,6 @@ public class AdsIntegrationTests {
             testUser = userDao.save(newUser);
         }
 
-        userService.authenticate(testUser);
-
         // Throw a Post request to /login and expect a redirection to the Ads index page after being logged in
         httpSession = this.mvc.perform(post("/login").with(csrf())
                 .param("username", "testUser")
@@ -75,8 +73,6 @@ public class AdsIntegrationTests {
                 .andReturn()
                 .getRequest()
                 .getSession();
-
-
     }
 
     // Sanity Test, just to make sure the mvc bean is working
