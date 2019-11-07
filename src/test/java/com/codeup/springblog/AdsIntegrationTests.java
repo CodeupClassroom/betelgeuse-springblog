@@ -10,18 +10,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpSession;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -84,7 +78,7 @@ public class AdsIntegrationTests {
     @Test
     public void testCreateAd() throws Exception {
 
-        HttpSession session = this.mvc.perform(post("/login")
+        HttpSession session = this.mvc.perform(post("/login").with(csrf())
                 .param("username", "testUser")
                 .param("password", "pass"))
                 .andExpect(status().is(HttpStatus.FOUND.value()))
@@ -96,7 +90,7 @@ public class AdsIntegrationTests {
         Assert.assertNotNull(session);
 
         this.mvc.perform(
-                post("/ads/create")
+                post("/ads/create").with(csrf())
                     .session((MockHttpSession) session)
                     .param("title", "test")
                     .param("description", "for sale"))
