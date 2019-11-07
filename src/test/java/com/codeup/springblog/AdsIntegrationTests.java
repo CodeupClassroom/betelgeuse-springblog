@@ -1,8 +1,11 @@
 package com.codeup.springblog;
 
+import com.codeup.springblog.models.Ad;
 import com.codeup.springblog.models.User;
+import com.codeup.springblog.repos.AdRepository;
 import com.codeup.springblog.repos.UserRepository;
 import com.codeup.springblog.services.UserService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +42,9 @@ public class AdsIntegrationTests {
     UserRepository userDao;
 
     @Autowired
+    AdRepository adsDao;
+
+    @Autowired
     UserService userService;
 
     @Autowired
@@ -69,15 +75,9 @@ public class AdsIntegrationTests {
     }
 
     @Test
-    public void testAdsIndex() throws Exception {
-        this.mvc.perform(get("/ads"))
-            .andExpect(status().isOk())
-            .andExpect(content().string(containsString("Latest ads")));
-    }
-
-    @Test
     public void testCreateAd() throws Exception {
 
+        // Throw a Post request to /login and expect a redirection to the Ads index page after being logged in
         HttpSession session = this.mvc.perform(post("/login").with(csrf())
                 .param("username", "testUser")
                 .param("password", "pass"))
@@ -87,8 +87,10 @@ public class AdsIntegrationTests {
                 .getRequest()
                 .getSession();
 
+        // Make sure the returned session is not null
         Assert.assertNotNull(session);
 
+        // Throw a Post request to /ads/create and expect a redirection to the Ad
         this.mvc.perform(
                 post("/ads/create").with(csrf())
                     .session((MockHttpSession) session)
@@ -97,12 +99,24 @@ public class AdsIntegrationTests {
                 .andExpect(status().is3xxRedirection());
     }
 
-
     @Test
     public void testShowAd() throws Exception {
-        this.mvc.perform(get("/ads/1"))
+        Ad existingAd = adsDao.findAll().get(0);
+        System.out.println("existingAd.getId() = " + existingAd.getId());
+        this.mvc.perform(get("/ads/" + existingAd.getId()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("for sale")));
+                // Test the dynamic content of the page
+                .andExpect(content().string(containsString(existingAd.getDescription())));
+    }
+
+    @Test
+    public void testAdsIndex() throws Exception {
+        Ad existingAd = adsDao.findAll().get(0);
+        this.mvc.perform(get("/ads"))
+                .andExpect(status().isOk())
+                // Test the static content of the page
+                .andExpect(content().string(containsString("Latest ads")))
+                // Test the dynamic content of the page
+                .andExpect(content().string(containsString(existingAd.getTitle())));
     }
 }
-
